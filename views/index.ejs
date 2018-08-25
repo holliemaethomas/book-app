@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+ <h1>Count: <%= books.length %> </h1>
+ <ul>
+
+  <% books.forEach((book) => { %>
+    <li><%= book.title %> : <%= book.author %> <img src="<%= book.image_url %>"/></li>
+    <% }) %>
+    
+ </ul>
+  
+  
+ 
+  
+</body>
+
+</html>

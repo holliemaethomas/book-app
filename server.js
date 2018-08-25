@@ -1,60 +1,37 @@
-'use strict';
+'use strict'
 
+require('dotenv').config();
+
+
+const express = require('express');
 const pg = require('pg');
-const fs = require('fs');
-const express = require('express');
-const PORT = process.env.PORT || 3000;
 const app = express();
 
-// const conString = 'postgres://sgtbelly:123456@localhost:5432/bookapp';
-const client = new pg.Client(conString);
+const PORT = process.env.PORT;
+const client = new pg.Client(process.env.DATABASE_URL);
+
+
+
 client.connect();
-client.on('error', error => {
-  console.error(error);
-});
+client.on('error', err => console.error(err));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('./public'));
-const express = require('express');
-
-const app = express();
-
-// Use this as a talking point about environment variables
-const PORT = process.env.PORT || 3000;
-
-// Set the view engine for templating
 app.set('view engine', 'ejs');
 
-// Array of groceries for /list route
-let groceries = ['apples', 'celery', 'butter', 'milk', 'eggs'];
+app.use(express.static('./public'));
 
-// Array of quantities for /details route
-let quantities = [
-  { name: 'apples', quantity: 4 },
-  { name: 'celery', quantity: 1 },
-  { name: 'butter', quantity: 1 },
-  { name: 'milk', quantity: 2 },
-  { name: 'eggs', quantity: 12 },
-  { name: 'beans', quantity: 0 },
-]
 
-// Routes
-app.get('/', (request, response) => {
-  response.render('index');
+app.get('/books', (request, response) => {
+  client.query(`
+      SELECT title, author, image_url
+      FROM books
+    `)
+    .then(result => {
+      response.render('index.ejs', { books: result.rows });
+    })
 });
 
-app.get('/list', (request, response) => {
-  response.render('list', { items: groceries });
+app.get('*', (request, response) => {
+  response.render('pages/error');
 })
 
-app.get('/details', (request, response) => {
-  response.render('details', { items: quantities });
-})
-
-// after demonstrating /list and /details separately, refactor list.ejs to use conditional logic
-app.get('/list-all', (request, response) => {
-  response.render('list', { items: quantities });
-})
-
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on PORT`,PORT));
