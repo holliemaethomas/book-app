@@ -4,7 +4,7 @@ require('dotenv').config();
 const pg = require('pg');
 const fs = require('fs');
 const express = require('express');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const app = express();
 
 const conString = 'postgres://localhost:5432/books_app';
