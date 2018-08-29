@@ -5,20 +5,22 @@
 <head>
 <link rel="stylesheet" href= "styles/layout.css">
 </head>
-
+<header>
+  <%- include('partials/header'); %>
+</header>
 <body>
  <h1>Count: <%= books.length %> </h1>
  <ul>
 
   <% books.forEach((book) => { %>
-    <li><%= book.title %> : <%= book.author %> <img src="<%= book.image_url %>"/></li>
-    <% }) %>
+    <li><%= book.title%> : <%= book.author %> <img src="<%= book.image_url %>"/></li>
     
- </ul>
+  </ul>
   
+  <a href ="./books/<%= book.id %>">View Details</a>
   
- 
-  
+  <% }) %>
+  <footer><%- include('partials/footer'); %></footer>
 </body>
 
 </html>
