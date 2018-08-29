@@ -34,4 +34,13 @@ app.get('*', (request, response) => {
   response.render('pages/error');
 })
 
+app.get('/books/: id'), (request, response) => {
+  const sql = `SELECT * FROM books WHERE id=$1`;
+  const values = [request.params.id]
+  client.query(sql, values).then (results => {
+    response.render ('pages/show', {books: results.rows})
+  });
+};
+
 app.listen(PORT, () => console.log(`Listening on PORT`,PORT));
+
