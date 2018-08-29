@@ -22,7 +22,7 @@ app.use(express.static('./public'));
 
 app.get('/books', (request, response) => {
   client.query(`
-      SELECT title, author, image_url
+      SELECT title, author, image_url, id
       FROM books
     `)
     .then(result => {
@@ -30,8 +30,18 @@ app.get('/books', (request, response) => {
     })
 });
 
+app.get('/books/:id', (request, response) => {
+  const sql = `SELECT * FROM books WHERE id=($1)`;
+  const values = [request.params.id];
+  client.query(sql, values)
+    .then (results => {
+      response.render ('pages/show.ejs', {books: results.rows})
+    })
+    .catch (err => console.log(err, response));
+});
+
 app.get('*', (request, response) => {
   response.render('pages/error');
 })
-
 app.listen(PORT, () => console.log(`Listening on PORT`,PORT));
+

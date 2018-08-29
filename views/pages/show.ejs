@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <link rel="stylesheet" href="./styles/layout.css">
+</head>
+
+<body>
+  <h1>Count:
+    <%= books.length %>
+  </h1>
+  <ul>
+
+    <% books.forEach((book) => { %>
+     
+      <li><%= book.title %> : <%= book.author %> <img src="<%= book.image_url %>" /></li>
+      <li><%= book.description %> : <%= book.isbn %> </li>
+
+  </ul>
+
+  <a href="../books/">home</a>
+
+  <% }) %>
+<footer>
+  <%- include('partials/footer'); %>
+</footer>
+</body>
+
+</html>
