@@ -7,6 +7,9 @@
 </head>
 
 <body>
+  <header>
+    <% include('../partials/header'); %>
+  </header>
   <h1>Count:
     <%= books.length %>
   </h1>
@@ -19,11 +22,11 @@
 
   </ul>
 
-  <a href="../books/">home</a>
+  <a href="/books">home</a>
 
   <% }) %>
 <footer>
-  <%- include('partials/footer'); %>
+  <% include('../partials/footer'); %>
 </footer>
 </body>
 
