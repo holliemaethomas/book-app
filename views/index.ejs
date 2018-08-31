@@ -5,10 +5,10 @@
 <head>
 <link rel="stylesheet" href= "styles/layout.css">
 </head>
-<header>
-  <%- include('partials/header'); %>
-</header>
 <body>
+  <header>
+    <%include('partials/header'); %>
+  </header>
  <h1>Count: <%= books.length %> </h1>
  <ul>
 
@@ -20,8 +20,8 @@
   <a href ="./books/<%= book.id %>">View Details</a>
   
   <% }) %>
-  <footer><%- include('partials/footer'); %></footer>
-  <a href="/views/pages/new.ejs">Add New</a>
+  <footer><%include('partials/footer'); %></footer>
+  <a href="views/pages/new.ejs">Add New</a>
 </body>
 
 </html>
