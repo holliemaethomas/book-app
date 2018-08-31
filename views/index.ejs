@@ -7,21 +7,28 @@
 </head>
 <body>
   <header>
-    <%include('partials/header'); %>
+    <%-include('partials/header'); %>
   </header>
- <h1>Count: <%= books.length %> </h1>
- <ul>
-
+<h1 id="book-count">Book Count:
+  <%= books.length %>
+</h1>
+<div id="books-populating">
   <% books.forEach((book) => { %>
-    <li><%= book.title%> : <%= book.author %> <img src="<%= book.image_url %>"/></li>
-    
-  </ul>
-  
-  <a href ="./books/<%= book.id %>">View Details</a>
-  
-  <% }) %>
-  <footer><%include('partials/footer'); %></footer>
-  <a href="views/pages/new.ejs">Add New</a>
+    <div class="each-book">
+      <img src="<%= book.image_url %>" class="book-image" />
+      <p class="book-title">
+        <%= book.title %>
+      </p>
+      <p class="book-author">
+        <%= book.author %>
+      </p>
+      <button class="button" type="button"><a href="/books/<%= book.id %>">View Details</a></button>
+    </div>
+    <% }) %>
+</div>
+<header>
+  <%-include('partials/footer'); %>
+</header>
 </body>
 
 </html>

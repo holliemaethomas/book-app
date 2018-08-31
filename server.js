@@ -4,7 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const pg = require('pg');
 const app = express();
-const superagent = require('superagent');
+// const superagent = require('superagent');
 
 //server set up
 const PORT = process.env.PORT;
@@ -45,11 +45,35 @@ app.get('/books/:id', (request, response) => {
     .catch (err => console.log(err, response));
 });
 
+// const url = 'https://www.googleapis.com/books/v1/volumes';
+// app.get('/super', (request, response) => {
+//   response.send(superagent.get(http: examplesiteinformarion)
+//   .then(results => {
+//     response.send(results.body)
+//   }));
+// });
+
+app.get('pages/view/new', (request, response) => {
+  response.render('pages/new')
+})
+
 app.get('*', (request, response) => {
   response.render('pages/error');
 })
 
+app.post('/books',(request, response) => {
+  let {author, title, isbn, image_url, description} = request.body;
+  let sql = `INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1, $2, $3, $4, $5);`;
+  let VALUES = [author, title, isbn, image_url, description];
+  return client.query(sql, VALUES)
+    .then(() => {
+      sql = `SELECT * FROM books WHERE isbn=$1;`;
+      VALUES =[request.body.isbn];
+      return client.query (sql, VALUES)
+        .then(result => response.render('pages/show', {books : result.rows[0], message: 'Thank you for adding to my collection'}))
+    })
 
+})
 
 
 //listener
