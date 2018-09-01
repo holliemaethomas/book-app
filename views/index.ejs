@@ -3,32 +3,31 @@
 <html>
 
 <head>
-<link rel="stylesheet" href= "styles/layout.css">
+  <link rel="stylesheet" href="styles/layout.css">
 </head>
-<body>
-  <header>
-    <%-include('partials/header'); %>
-  </header>
-<h1 id="book-count">Book Count:
-  <%= books.length %>
-</h1>
-<div id="books-populating">
-  <% books.forEach((book) => { %>
-    <div class="each-book">
-      <img src="<%= book.image_url %>" class="book-image" />
-      <p class="book-title">
-        <%= book.title %>
-      </p>
-      <p class="book-author">
-        <%= book.author %>
-      </p>
-      <button class="button" type="button"><a href="/books/<%= book.id %>">View Details</a></button>
-    </div>
-    <% }) %>
-</div>
 <header>
-  <%-include('partials/footer'); %>
+  <%- include('partials/header'); %>
 </header>
+
+<body>
+  <h1>Count:
+    <%= books.length %>
+  </h1>
+  <ul>
+
+    <% books.forEach((book) => { %>
+      <li>
+        <%= book.title%> :
+          <%= book.author %> <img src="<%= book.image_url %>" /></li>
+
+  </ul>
+
+  <a href="./books/<%= book.id %>">View Details</a>
+
+  <% }) %>
+    <footer>
+      <%- include('partials/footer'); %>
+    </footer>
 </body>
 
 </html>
