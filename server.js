@@ -53,13 +53,10 @@ app.get('/books/:id', (request, response) => {
 //   }));
 // });
 
-app.get('pages/view/new', (request, response) => {
-  response.render('pages/new')
+app.get('views/pages/new', (request, response) => {
+  response.render('/new');
 })
 
-app.get('*', (request, response) => {
-  response.render('pages/error');
-})
 
 app.post('/books',(request, response) => {
   let {author, title, isbn, image_url, description} = request.body;
@@ -72,9 +69,12 @@ app.post('/books',(request, response) => {
       return client.query (sql, VALUES)
         .then(result => response.render('pages/show', {books : result.rows[0], message: 'Thank you for adding to my collection'}))
     })
-
+  
 })
 
+app.get('*', (request, response) => {
+  response.render('pages/error');
+})
 
 //listener
 app.listen(PORT, () => console.log(`Listening on PORT`,PORT));
