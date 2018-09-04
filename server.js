@@ -17,21 +17,24 @@ client.on('error', err => console.error(err));
 //view engine connect
 app.set('view engine', 'ejs');
 
+app.use(express.urlencoded({extended:true}));
 //set as static
 app.use(express.static('./public'));
 
 //API
+app.get('/pages/new', (request, response) => {
+  response.render('pages/new');
+})
 
 
 
 //queries
 app.get('/books', (request, response) => {
   client.query(`
-      SELECT title, author, image_url, id
-      FROM books
+      SELECT * FROM books;
     `)
     .then(result => {
-      response.render('index.ejs', { books: result.rows });
+      response.render('index', { books: result.rows });
     })
 });
 
@@ -40,25 +43,19 @@ app.get('/books/:id', (request, response) => {
   const values = [request.params.id];
   client.query(sql, values)
     .then (results => {
-      response.render ('pages/show.ejs', {books: results.rows})
+      
+      response.render('pages/show.ejs',{books: results.rows})
     })
+
     .catch (err => console.log(err, response));
 });
 
-// const url = 'https://www.googleapis.com/books/v1/volumes';
-// app.get('/super', (request, response) => {
-//   response.send(superagent.get(http: examplesiteinformarion)
-//   .then(results => {
-//     response.send(results.body)
-//   }));
-// });
 
-app.get('views/pages/new', (request, response) => {
-  response.render('/new');
-})
+
 
 
 app.post('/books',(request, response) => {
+  console.log('MESSAGE',request.body);
   let {author, title, isbn, image_url, description} = request.body;
   let sql = `INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1, $2, $3, $4, $5);`;
   let VALUES = [author, title, isbn, image_url, description];
@@ -67,10 +64,15 @@ app.post('/books',(request, response) => {
       sql = `SELECT * FROM books WHERE isbn=$1;`;
       VALUES =[request.body.isbn];
       return client.query (sql, VALUES)
-        .then(result => response.render('pages/show', {books : result.rows[0], message: 'Thank you for adding to my collection'}))
+        .then(result => {
+          console.log('ATTENTION', result.rows[0]);
+          
+          return response.render('pages/show', {books : [result.rows[0]], message:'Thank you for adding to my collection'})})
+        .catch(err => {console.log(err); response.status(500).send(err)});
     })
-  
+ 
 })
+
 
 app.get('*', (request, response) => {
   response.render('pages/error');
