@@ -13,12 +13,16 @@
   <h1>Count:
     <%= books.length %>
   </h1>
+  <div>
+    <%= message %>
+  </div>
   <ul>
 
     <% books.forEach((book) => { %>
      
       <li><%= book.title %> : <%= book.author %> <img src="<%= book.image_url %>" /></li>
       <li><%= book.description %> : <%= book.isbn %> </li>
+     
 
   </ul>
 
