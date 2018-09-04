@@ -10,19 +10,19 @@
 </header>
 
 <body>
-  <h1>Count:
+  <h1 id="title">My List:
     <%= books.length %>
   </h1>
   <ul>
 
     <% books.forEach((book) => { %>
-      <li>
+      <li class="bookList">
         <%= book.title%> :
-          <%= book.author %> <img src="<%= book.image_url %>" /></li>
+          <%= book.author %> <img class="bookCover" src="<%= book.image_url %>" /></li>
 
   </ul>
 
-  <a href="./books/<%= book.id %>">View Details</a>
+  <a class="detailTag" href="./books/<%= book.id %>">View Details</a>
 
   <% }) %>
     <footer>

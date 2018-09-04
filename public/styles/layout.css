@@ -1,6 +1,31 @@
 body{
-  background-color: blueviolet;
-font-family: Arial, Helvetica, sans-serif;
+  background-color: gray;
 
+}
+.bookCover{
+   display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 27%;
+    margin-top: 10pt;
+    margin-bottom: 25pt;
 
+}
 
+.bookList{
+font-family: fantasy;
+
+text-align: center;
+font-size: 15pt;
+}
+
+title{
+  text-align: center;
+  font-size: 40pt;
+  margin-left: 70pt;
+  margin-right: auto;
+}
+
+.detailTag{
+  text-align: center;
+}
